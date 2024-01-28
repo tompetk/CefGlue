@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
+using Xilium.CefGlue.Common.Callbacks;
 using Xilium.CefGlue.Common.Events;
 using Xilium.CefGlue.Common.Handlers;
 using Xilium.CefGlue.Common.Helpers;
@@ -499,6 +500,21 @@ namespace Xilium.CefGlue.Common
             BrowserHost = null;
             _cefClient = null;
             _browser = null;
+        }
+
+        public byte[] GetScreenshot()
+        {
+            var callback = new ScreenshotCallback();
+            var reg = BrowserHost.AddDevToolsMessageObserver(callback);
+
+            var p = CefDictionaryValue.Create();
+            var res = BrowserHost.ExecuteDevToolsMethod(0, "Page.captureScreenshot", p);
+            while (res == 0 && callback.ImageData == null)
+            {
+                System.Threading.Thread.Sleep(10);
+            }
+
+            return callback.ImageData;
         }
 
         #region ICefBrowserHost

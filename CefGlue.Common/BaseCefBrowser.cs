@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Xilium.CefGlue.Common.Events;
 using Xilium.CefGlue.Common.Handlers;
@@ -382,6 +382,12 @@ namespace Xilium.CefGlue.Common
         public void Zoom(CefZoomCommand command)
         {
             _adapter.Zoom(command);
+        }
+
+        public byte[] GetScreenshot()
+        {
+            return _adapter.GetScreenshot();
+
         }
 
         /// <summary>
