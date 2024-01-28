@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Xilium.CefGlue.Common.Events;
 using Xilium.CefGlue.Common.Handlers;
@@ -333,12 +333,15 @@ namespace Xilium.CefGlue.Common
             return _adapter.EvaluateJavaScript<T>(code, url ?? "about:blank", line, frame, timeout);
         }
 
+        public bool IsDeveloperToolsOpened { get; private set; }
+
         /// <summary>
         /// Opens the Developer tools.
         /// </summary>
         public void ShowDeveloperTools()
         {
             _adapter.ShowDeveloperTools();
+            IsDeveloperToolsOpened = true;
         }
 
         /// <summary>
@@ -347,6 +350,7 @@ namespace Xilium.CefGlue.Common
         public void CloseDeveloperTools()
         {
             _adapter.CloseDeveloperTools();
+            IsDeveloperToolsOpened = false;
         }
 
         /// <summary>
@@ -396,7 +400,7 @@ namespace Xilium.CefGlue.Common
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns>True if browser was created, false otherwise.</returns>
-        protected bool CreateBrowser(int width, int height)
+        public bool CreateBrowser(int width, int height)
         {
             return _adapter.CreateBrowser(width, height);
         }
