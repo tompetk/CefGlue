@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -41,8 +41,6 @@ namespace Xilium.CefGlue.Common.Callbacks
             var response = System.Text.Json.JsonSerializer.Deserialize<DevToolsReponse>(responseString);
             var imageData = Convert.FromBase64String(response.result.data);
             ImageData = imageData;
-
-            File.WriteAllBytes("screenshot.png", imageData);
 
             return true;
         }
